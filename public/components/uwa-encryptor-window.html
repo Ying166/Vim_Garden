@@ -1,0 +1,33 @@
+<!-- /public/components/uwa-encryptor-window.html -->
+<div class="window" id="uwa-encryptor-window" style="top: 120px; left: 180px; width: 480px; height: 500px;">
+    <div class="title-bar">
+        <div class="title-bar-text">Say something Green</div>
+        <div class="title-bar-controls">
+            <button aria-label="Minimize"></button>
+            <button aria-label="Maximize"></button>
+            <button aria-label="Close" class="close-button"></button>
+        </div>
+    </div>
+    <div class="window-body uwa-body">
+        
+        <!-- 输入区域 -->
+        <fieldset class="uwa-fieldset">
+            <legend>你的文本... (Input)</legend>
+            <textarea id="uwa-input" class="sunken-panel" placeholder="把你说的话，或是绿绿说的话塞进来。"></textarea>
+        </fieldset>
+        
+        <!-- 输出区域 -->
+        <fieldset class="uwa-fieldset">
+            <legend> 该输出了。(Output)</legend>
+            <textarea id="uwa-output" class="sunken-panel" placeholder="这里会有绿绿会说的话，或是人话，取决于你。" readonly></textarea>
+        </fieldset>
+
+        <!-- 底部按钮栏 -->
+        <div class="dialog-buttons">
+            <button id="uwa-encrypt-button">加密</button>
+            <button id="uwa-decrypt-button">解密</button>
+            <button id="uwa-copy-button">复制结果</button>
+            <button id="uwa-clear-button">清空</button>
+        </div>
+    </div>
+</div>

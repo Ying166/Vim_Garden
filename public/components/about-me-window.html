@@ -1,0 +1,77 @@
+    <!-- /public/components/about-me-window.html -->
+    <div class="window" id="about-me-window" style="top: 100px; left: 150px; width: 450px;">
+        <div class="title-bar">
+            <div class="title-bar-text">想了解吸血鬼?</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize"></button>
+                <button aria-label="Maximize"></button>
+                <button aria-label="Close" class="close-button"></button>
+            </div>
+        </div>
+        <div class="window-body">
+            <!-- ===== 左右布局容器 ===== -->
+            <div class="about-me-layout">
+                <!-- 左侧：图片 -->
+                <div class="profile-picture-container">
+                    <div class="sunken-panel">
+                        <img src="assets/icons/jill.gif" alt="吸血鬼的头像">
+                    </div>
+                </div>
+
+                <!-- 右侧：选项卡 -->
+                <div class="info-tabs-container">
+                    <div class="tabs">
+                        <ul role="tablist">
+                            <li role="tab" aria-controls="tab-general" aria-selected="true"><a>基本信息</a></li>
+                            <li role="tab" aria-controls="tab-links"><a>外部链接</a></li>
+                            <li role="tab" aria-controls="tab-skills"><a>爱好...</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-panels">
+                        <!-- 选项卡1: 基本信息 -->
+                        <div role="tabpanel" id="tab-general">
+                            <p>-字面意义的吸血鬼，活了五百年（但不要问太多历史知识，吸血鬼不一定记得）</p>
+                            <p>-昼伏夜出，就算你真的点开了吸血鬼的联系方式也不保证得到回复</p>
+                            <p>-可能会分享自己的观点，但吸血鬼并不保证自己的观点能被人类接受</p>
+                            <p>-如果你很幸运或很倒霉，你会被吸血鬼关注，但没人能保证后果</p>
+                        </div>
+                        <!-- 选项卡2: 外部链接 -->
+                        <div role="tabpanel" id="tab-links" style="display: none;">
+                            <ul class="link-list">
+                                <li>也许有部分外网链接...</li>
+                                <li>
+                                    <img src="assets/icons/github.png" alt="GitHub">
+                                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1" target="_blank">我的 GitHub</a>
+                                </li>
+                                <li>
+                                    <img src="assets/icons/tellonym.png" alt="Blog">
+                                    <a href="https://tellonym.me/166.ying" target="_blank">想说悄悄话？</a>
+                                </li>
+                                <li>
+                                    <img src="assets/icons/bilibili.jpg" alt="Bilibili">
+                                    <a href="https://space.bilibili.com/4267300" target="_blank">Bilibili</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- 选项卡3: 技能&兴趣 -->
+                        <div role="tabpanel" id="tab-skills" style="display: none;">
+                            <p><b>如果你见不到吸血鬼，那么吸血鬼可能正在:</b></p>
+                            <ul>
+                                <li>玩WOW或FFXIV（MMORPG）</li>
+                                <li>被困在拟境（解谜游戏）</li>
+                                <li>读要么像是海猫要么含有百合要素的视觉小说（NVL）</li>
+                                <li>创造第二个自己来24小时玩有趣的单机作（独立游戏）</li>
+                                <li>睡觉。（电脑眠眠猫）</li>
+                            </ul>
+                            <p><b>而如果吸血鬼来了兴头，可能会...</b></p>
+                            <ul>
+                                <li>把一些视觉效果变成现实 ，比如你眼前的这个。</li>
+                                <li>某些来自身边的灵感做成工具</li>
+                                <li>进行可能涉及图像、文字或音乐的一切形式创作...可能引起精神污染。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

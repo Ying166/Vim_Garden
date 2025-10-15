@@ -1,0 +1,122 @@
+<!-- /public/components/my-projects-window.html -->
+<div class="window" id="my-projects-window" style="top: 200px; left: 300px; width: 500px;">
+    <div class="title-bar">
+        <div class="title-bar-text">这是哪儿？</div>
+        <div class="title-bar-controls">
+            <button aria-label="Minimize"></button>
+            <button aria-label="Maximize"></button>
+            <button aria-label="Close" class="close-button"></button>
+        </div>
+    </div>
+    <!-- ===== window-body ===== -->
+    <div class="window-body has-sidebar">
+        <!-- 左侧：导航树 -->
+        <div class="sidebar">
+            <ul class="tree-view" id="help-nav-tree">
+                <!-- data-target 属性关联右侧的内容面板ID -->
+                <li class="nav-item active" data-target="panel-welcome">关于这里</li>
+                <li class="nav-item" data-target="panel-sitemap">页面导航</li>
+                <li class="nav-item" data-target="panel-changelog">更新日志</li>
+                <li class="nav-item" data-target="panel-credits">借物表</li>
+            </ul>
+        </div>
+        <!-- 右侧：内容面板 -->
+        <div class="content-panel sunken-panel">
+            <!-- 说明 -->
+            <div class="panel-content" id="panel-welcome">
+                <h3>吸血鬼的后花园</h3>
+                <p>如果你还没看到网页标题，希望现在你看到了。</p>
+                <p>你可以随便点点，这里那里的。说不定会出现什么有趣的事情。</p>
+                <p>吸血鬼构建了这里。但吸血鬼创造的世界，并非完美。如果你发现了什么地方，认为这不符合直觉或预期，你可以使用桌面的那个记事本联系吸血鬼。</p>
+                <p>如果一切顺利的话，那么修正公告将会和你留下的ID一起，出现在左侧的更新日志里。</p>
+                <p>本身是实验性质的内容。所以别指望它非常稳定和勤快。吸血鬼可能会不定期的更新——以吸血鬼的不定期，更新一些有趣的玩意儿，当然，你没准还能看到吸血鬼的个人日志——假设你足够幸运。</p>
+                <hr>
+                <p><b>交互提示：</b></p>
+                <ul>
+                    <li>双击桌面图标可以打开程序。</li>
+                    <li>拖动桌面图标可以挪动它，页面刷新后重置。</li>
+                    <li>拖动窗口的标题栏可以移动它。</li>
+                    <li>任务栏会显示所有已打开的窗口，WINDWOS逻辑。</li>
+                </ul>
+            </div>
+            <!-- 指南 -->
+            <div class="panel-content" id="panel-sitemap" style="display: none;">
+                <h3>大概是导航</h3>
+                <p>为了让你搞清楚所有东西的用途：</p>
+                <ul>
+                    <li><b>桌面：</b>看到它，觉得怀念，说明你老了。</li>
+                    <li><b>我的电脑：</b>不想要花里胡哨的装饰，只想要找实质性的内容。All In IT.</li>
+                    <li><b>我的文档：</b>所见即所得。</li>
+                    <li><b>关于吸血鬼：</b>了解吸血鬼的第一步，后面还有很多步。</li>
+                    <li><b>回收站：</b>它一开始就在这里吗？（尚未完成）</li>
+                    <li><b>显示属性：</b>把全局缩放得更大，而不是去找一副眼镜。我不就山，山便就我。</li>
+                    <li><b>记事本：</b>写点什么发送给吸血鬼，记得署名。</li>
+                    <li><b>开始菜单：</b>也许你想换个风格。（尚未完成）</li>
+                    <li><b>让我们说绿绿话：</b>成为某人口中的经典风格。</li>
+                </ul>
+            </div>
+            <!-- 更新日志 -->
+            <div class="panel-content" id="panel-changelog" style="display: none;">
+                <h3>更新日志</h3>
+                <p><b>2025.10.16</b></p>
+                <ul>
+                    <li>更新了内置阅读器的格式，现在它的使用体验理论应该更好。</li>
+                    <li>修复了一个很罕见的情况下导致的时钟闪烁问题。</li>
+                    <li>引入了音效系统，取自WIN98系统。同时可以在右下角调整全局音量大小了。</li>
+                    <li>日常维护，修复了重构带来的若干导致视觉和体验受影响的错误。</li>
+                    <li>启发了这个世界的“呜哇生成器”终于移植到了这里。算法经过了优化，现在谁都可以充分的享受300%的绿绿了。这个（指绿绿），不需要了。</li>
+                </ul>
+                <p><b>2025.10.15</b></p>
+                <ul>
+                    <li>重新设计了“我的电脑”的设计，现在以WIN95的资源管理器作为风格的参考设计。并重构了文档的路径结构，现在由前后端交互自动化生成。</li>
+                    <li>重构了html前端改为fetch加载，重构了后端脚本改为动态加载，现在维护变得更简单了。</li>
+                </ul>
+                <p><b>2025.10.14</b></p>
+                <ul>
+                    <li>重构了“开始菜单”相关结构，现在以更便于维护和扩展的样式设计，并支持了多级菜单。</li>
+                    <li>日常维护，修复了若干导致视觉和体验受影响的错误。</li>
+                    <li>重构了“我的电脑”相关结构，现在以WIN95的资源管理器作为风格的参考设计，并支持了伪路径切换的选项卡切换。</li>
+                    <li>完成了服务器后端内容的制作。基于node的express框架现在正式完成了。依托于此，添加了“笔记本”程序，现在可以通过程序为吸血鬼留言。</li>
+                    <li>为桌面的图标制作了拖动效果，现在可以把它们拖来拖去，但这些改动并不会存储在本地，它们会在网页刷新后重置，以防被拖走找不回来。</li>
+                    <li>添加了“显示属性”，现在可以进行全局缩放调整，不用再眯起眼睛。</li>
+                </ul>
+                <p><b>2025.10.13</b></p>
+                <ul>
+                    <li>重构了“我的文档”相关结构，现在以Win95的帮助文档作为风格的参考设计，并支持了选项卡切换。</li>
+                    <li>重构了“关于吸血鬼”相关结构，现在具有头像，并支持了选项卡切换。</li>
+                    <li>世界从这里开始，在这之前，一切都并不存在。</li>
+                </ul>
+                <p><b>2025.10.12</b></p>
+                <ul>
+                    <li>第一批被完成的内容是：桌面、我的电脑、我的文档、关于我（吸血鬼）、回收站、开始菜单、桌面时钟</li>
+                    <li>由于WordPress开发效果不利，正式转向HTML+CSS+JS的制作模式。</li>
+                    <li>受自由开发者（匿名）的影响，获得了制作WIN95主题的灵感。</li>
+                </ul>
+                <p><b>2025.8.?</b></p>
+                <ul>
+                    <li>使用WordPress作为托管平台的“吸血鬼的后花园”进行了测试。</li>
+                </ul>
+                <p><b>2025.7.?</b></p>
+                <ul>
+                    <li>完成了“呜哇呜哇生成器”工具的制作。</li>
+                    <li>为了上传工具至互联网，决定进行主页开发，进行了服务器的购置和域名准备。</li>
+                </ul>
+                <p><b>2025.6.?</b></p>
+                <ul>
+                    <li>制作一个工具上传至互联网的念头出现了。</li>
+                </ul>
+            </div>
+            <!-- 借物表 -->
+            <div class="panel-content" id="panel-credits" style="display: none;">
+                <h3>借物表</h3>
+                <p>合格的制作者会对构成了自身的环境表达感谢：</p>
+                <ul>
+                    <li><b>98.css:</b> 不用手搓CSS真是太好了。</li>
+                    <li><b>wetnut@Strawpage:</b>灵感总有源头。</li>
+                    <li><b>MDN Web Docs:</b>如果没有它，吸血鬼不知道要去哪里找回自己丢失的WEB知识。</li>
+                    <li><b>showdown:</b>不用自己写Markdown to HTML实在是太好了。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

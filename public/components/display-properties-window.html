@@ -1,0 +1,57 @@
+<!-- /public/components/display-properties-window.html -->
+<div class="window" id="display-properties-window" style="top: 150px; left: 200px; width: 480px;">
+    <div class="title-bar">
+        <div class="title-bar-text">显示 属性</div>
+        <div class="title-bar-controls">
+            <!-- 这个窗口通常没有最小化/最大化，只有一个关闭按钮 -->
+            <button aria-label="Close" class="close-button"></button>
+        </div>
+    </div>
+    <div class="window-body">
+        <!-- 仿真的选项卡，但我们只实现“设置” -->
+        <div class="tabs" style="margin: 3px;">
+            <ul role="tablist">
+                <li role="tab" aria-selected="false"><a>背景</a></li>
+                <li role="tab" aria-selected="false"><a>屏幕保护程序</a></li>
+                <li role="tab" aria-selected="false"><a>外观</a></li>
+                <li role="tab" aria-selected="true"><a>设置</a></li>
+            </ul>
+        </div>
+        
+        <div class="display-settings-layout sunken-panel">
+            <!-- 左侧：监视器预览 -->
+            <div class="monitor-preview">
+                <div class="monitor-screen">
+                    <span>WIN 98R</span>
+                    <span>Powered by F.S</span>
+                </div>
+            </div>
+
+            <!-- 右侧：设置控件 -->
+            <div class="settings-controls">
+                <fieldset>
+                    <legend>颜色</legend>
+                    <p>真彩色 (32 位)</p> <!-- 假的，纯装饰 -->
+                </fieldset>
+
+                <fieldset>
+                    <legend>桌面区域</legend>
+                    <label for="scale-select">全局缩放比例（建议值）:</label>
+                    <select id="scale-select">
+                        <option value="1">100% (1080P)</option>
+                        <option value="1.25">125% (2K)</option>
+                        <option value="1.5">150% (4K)</option>
+                        <option value="2">200% (8K)</option>
+                    </select>
+                </fieldset>
+            </div>
+        </div>
+
+        <!-- 底部按钮 -->
+        <div class="dialog-buttons">
+            <button id="display-ok-button">确定</button>
+            <button id="display-cancel-button">取消</button>
+            <button id="display-apply-button">应用</button>
+        </div>
+    </div>
+</div>

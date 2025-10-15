@@ -1,0 +1,381 @@
+/* main.css */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'W95F';
+    src: url('/assets/fonts/WenQuanYi\ Bitmap\ Song\ 16px.ttf'); 
+    font-weight: normal;
+    font-style: normal;
+}
+
+html {
+    height: 100%; /* 确保 html 元素也占满全屏 */
+}
+
+body {
+    font-family: 'W95F',sans-serif;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: grayscale;
+    font-smooth: never;
+    background-color: #008080;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    padding: 20px;
+    /* 为任务栏留出空间 */
+    padding-bottom: 40px; 
+}
+
+.desktop-icon {
+    /* 改为 absolute 定位，以便自由移动 */
+    position: absolute; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80px;
+    /* margin 被 top/left 替代 */
+    text-align: center;
+    /* 保持手形光标 */
+    cursor: url('/assets/cursors/link.cur'), pointer; 
+    /* 为拖动时的 z-index 变化添加过渡效果 */
+    transition: z-index 0s 0.2s; 
+}
+
+/* 当图标被拖动时应用的样式 */
+.desktop-icon.dragging {
+    /* 确保被拖动的图标在最上层 */
+    z-index: 1000; 
+    /* 移除过渡延迟，让 z-index 立即生效 */
+    transition-delay: 0s;
+}
+
+.desktop-icon img {
+    width: 50px;
+    height: 50px;
+}
+
+.desktop-icon span {
+    color: white;
+    margin-top: 5px;
+    background-color: #008080;
+    padding: 2px 4px;
+}
+
+.window {
+    position: absolute;
+    display: none;
+    width: 400px;
+    /* 确保窗口在任务栏之上 */
+    z-index: 10; 
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== 任务栏样式 ===== */
+.taskbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 38px;
+    background-color: #c0c0c0; /* 经典的灰色 */
+    border-top: 2px solid #ffffff;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* 从 space-between 改为 flex-start */
+    box-sizing: border-box; /* 让 padding 不会影响总宽度 */
+    z-index: 20; /* 确保任务栏在最上层 */
+}
+
+.start-button {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    padding: 2px 6px;
+}
+
+.start-button img {
+    margin-right: 5px;
+}
+
+#clock {
+    background-color: #c0c0c0;
+    padding: 0 10px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    min-width: 75px; 
+    justify-content: center;
+}
+
+.start-menu {
+    position: absolute;
+    bottom: 38px; /* 任务栏的高度 */
+    left: 3px;    /* 与开始按钮对齐 */
+    width: 220px;
+    background-color: #c0c0c0; /* 经典灰色 */
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    box-shadow: 1px 1px 0 #000;
+    display: none; /* 默认隐藏 */
+    z-index: 21; /* 确保在任务栏和窗口之上 */
+    padding: 2px;
+    flex-direction: row; /* 让侧边栏和主菜单水平排列 */
+}
+
+/* Win98 风格的垂直侧边栏 */
+.start-menu-sidebar {
+    width: 30px;
+    background: #808080; /* 深灰色 */
+    color: #c0c0c0;
+    writing-mode: vertical-rl; /* 让文字垂直显示 */
+    text-orientation: mixed;
+    transform: rotate(180deg); /* 旋转文字方向以正确显示 */
+    text-align: center;
+    padding: 10px 0;
+    font-size: 24px;
+    margin-right: 2px;
+}
+
+.start-menu-sidebar b {
+    color: #fff;
+}
+
+.start-menu-items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.start-menu-item {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+.start-menu-item:hover {
+    background-color: #000080; /* 经典蓝色高亮 */
+    color: #ffffff;
+}
+
+.start-menu-item img {
+    margin-right: 10px;
+}
+
+/* 菜单中的分隔线 */
+.separator {
+    height: 1px;
+    background-color: #808080;
+    border-bottom: 1px solid #ffffff;
+    margin: 4px 0;
+}
+
+.taskbar-windows {
+    flex-grow: 1; /* 这是关键，使其占据开始按钮和时钟之间的所有空间 */
+    display: flex;
+    align-items: center;
+    margin: 0 4px;
+    overflow: hidden; /* 如果标签太多，防止它们溢出 */
+}
+
+/* 单个窗口标签的样式 */
+.taskbar-tab {
+    display: flex;
+    align-items: center;
+    height: 28px;
+    padding: 0 8px;
+    margin: 0 2px;
+    min-width: 60px;
+    max-width: 150px; /* 防止标签过长 */
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    white-space: nowrap; /* 防止文字换行 */
+    overflow: hidden;
+    text-overflow: ellipsis; /* 如果文字太长，显示省略号 */
+}
+
+.taskbar-tab img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+/* 激活（被按下）状态的标签 */
+.taskbar-tab.active {
+    border-top: 2px solid #000000;
+    border-left: 2px solid #000000;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    background-color: #e0e0e0; /* 一个稍微深一点的灰色 */
+}
+
+/* ===== 新增：“我的电脑”窗口样式 ===== */
+
+/* 让窗口内容区有白色背景，像文件浏览器一样 */
+#my-computer-window .window-body {
+    background-color: #ffffff;
+    padding: 2px; /* 给一点内边距 */
+}
+
+.file-explorer-container {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column; /* 垂直排列文件 */
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    padding: 3px 5px;
+    text-decoration: none;
+    color: #000000;
+}
+
+.file-item img {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+}
+
+/* 经典的反色选中效果 */
+.file-item:hover,
+.file-item:focus {
+    background-color: #000080; /* Win98 经典的蓝色高亮 */
+    color: #ffffff;
+    outline: none;
+}
+
+.window.maximized {
+    /* 使用 !important 来覆盖拖动时设置的内联 style */
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    /* 使用 calc() 计算高度，减去任务栏的高度 (38px) */
+    height: calc(100% - 38px) !important;
+    
+    /* 最大化时不允许用户调整大小 */
+    resize: none;
+}
+
+/* 最大化时，标题栏的鼠标指针应变为默认，表示不可拖动 */
+body,.window.maximized .title-bar,select,label{
+    cursor: url('/assets/cursors/arrow.cur'), auto;
+}
+
+/* 链接和按钮上的手形指针 */
+a, button, .desktop-icon, .start-menu-item {
+    cursor: url('/assets/cursors/link.cur'), pointer;
+}
+
+/* 窗口标题栏的移动指针 */
+/* 我们只在窗口不处于最大化状态时应用它 */
+.window:not(.maximized) .title-bar {
+    cursor: url('/assets/cursors/move.cur'), move;
+}
+
+/* 文本输入区域的指针 (如果未来有的话) */
+input[type="text"], textarea {
+    cursor: url('/assets/cursors/text.cur'), text;
+}
+
+/* ===== 新增：动态开始菜单样式 (子菜单, 禁用项) ===== */
+
+.start-menu-item {
+    position: relative; /* Crucial for positioning submenus */
+}
+
+/* Style for disabled items */
+.start-menu-item.disabled {
+    color: #808080; /* Grayed out text */
+    text-shadow: 1px 1px #ffffff;
+}
+.start-menu-item.disabled:hover {
+    background-color: transparent; /* No hover effect */
+    color: #808080;
+}
+
+/* An arrow indicator for items that have a submenu */
+.start-menu-item.has-submenu > span {
+    flex-grow: 1; /* Make span take up available space */
+}
+.start-menu-item.has-submenu::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 4px 0 4px 4px; /* Creates a right-pointing triangle */
+    border-color: transparent transparent transparent #000000;
+    margin-right: 5px;
+}
+
+/* Submenu styles */
+.submenu {
+    position: absolute;
+    display: none; /* Hidden by default */
+    left: 100%; /* Position to the right of the parent item */
+    top: -4px;   /* Align with the top of the parent item */
+    width: 180px;
+    list-style: none;
+    margin: 0;
+    padding: 2px;
+    background-color: #c0c0c0;
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    box-shadow: 1px 1px 0 #000;
+    z-index: 22; /* Ensure it's above the main menu */
+}
+
+/* Show the submenu on hover */
+.start-menu-item:hover > .submenu {
+    display: block;
+}
+
+/* ===== 新增：系统托盘和音量控制样式 ===== */
+
+.system-tray {
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+}
+
+#volume-icon {
+    width: 20px;
+    height: 20px;
+}
+
+#volume-control-panel {
+    position: absolute;
+    bottom: 38px; /* 任务栏高度 */
+    right: 70px;  /* 根据你的时钟宽度微调 */
+    width: 150px;
+    height: 40px;
+    padding: 5px 10px;
+    flex-direction: row; /* 水平排列标签和滑块 */
+    align-items: center;
+    z-index: 22; /* 确保在开始菜单之上 */
+}
+
+#volume-control-panel label {
+    margin-right: 8px;
+}
+
+#volume-control-panel input[type="range"] {
+    flex-grow: 1; /* 让滑块占据剩余空间 */
+    margin: 0;
+}

@@ -1,0 +1,437 @@
+/* =================================================== */
+/* ===== UNIVERSAL WINDOW LAYOUT ENGINE - DO NOT EDIT ===== */
+/* =================================================== */
+
+/* This rule establishes the fundamental layout for ALL window content areas. */
+.window-body {
+    /* 作为窗口的直接子元素，它必须填满剩余空间 */
+    flex: 1;
+    min-height: 0; /* 防止其内容撑破自己 */
+
+    /* [核心修正] 它也必须成为一个 Flex 容器，来约束它自己的直接子元素 */
+    display: flex;
+    flex-direction: column;
+
+    padding: 0; /* 我们在具体的应用里再单独设置内边距 */
+}
+
+/* 关于吸血鬼*/
+/* 左右布局的容器 */
+.about-me-layout {
+    display: flex;
+    padding: 10px;
+}
+
+/* 左侧图片容器 */
+.profile-picture-container {
+    margin-right: 15px;
+    flex-shrink: 0; /* 防止容器被压缩 */
+}
+
+.profile-picture-container .sunken-panel {
+    padding: 4px;
+}
+
+.profile-picture-container img {
+    width: 100px;
+    height: 100px;
+    display: block;
+}
+
+/* 右侧选项卡容器 */
+.info-tabs-container {
+    flex-grow: 1; /* 占据剩余空间 */
+    width: 0; /* Flexbox 布局中的一个小技巧，防止内容溢出 */
+}
+
+/* 选项卡内容面板的基本样式 */
+.tab-panels {
+    border: 2px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+    padding: 12px;
+    margin-top: -5px; /* 让边框和选项卡重合 */
+    position: relative;
+    z-index: 1;
+}
+
+/* 链接列表的样式 */
+.link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.link-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.link-list img {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+}
+
+/* 让 window-body 支持 flex 布局 */
+.window-body.has-sidebar {
+    flex-direction: row; /* 从默认的 column 改为 row */
+    padding: 0;          /* 移除默认内边距 */
+}
+/*关于吸血鬼-结束*/
+
+
+
+/*我的文档*/
+/* 左侧导航栏 */
+.sidebar {
+    width: 150px;
+    flex-shrink: 0; /* 防止被压缩 */
+    background-color: #c0c0c0;
+    padding: 2px;
+}
+
+.sidebar .tree-view {
+    margin-right: 2px; /* 修复 98.css 的一点边距问题 */
+}
+
+.sidebar .tree-view li {
+    padding: 5px 8px;
+    cursor: url('/assets/cursors/link.cur'), pointer;
+}
+
+/* 左侧导航项的选中状态 */
+.sidebar .tree-view li.active {
+    background-color: #000080; /* 经典蓝色高亮 */
+    color: #ffffff;
+}
+
+/* 右侧内容面板 */
+.content-panel {
+    flex-grow: 1; /* 占据剩余所有空间 */
+    padding: 15px;
+    /* 让内容可以滚动 */
+    overflow-y: auto; 
+    height: 300px; /* 您可以根据需要调整默认高度 */
+}
+
+.content-panel h3 {
+    margin-top: 0;
+}
+/*我的文档-结束*/
+
+
+
+/*显示属性*/
+.display-settings-layout {
+    display: flex;
+    padding: 15px;
+    margin: 0 5px;
+}
+
+/* 左侧监视器预览 */
+.monitor-preview {
+    width: 150px;
+    height: 120px;
+    background-color: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.monitor-screen {
+    width: 100%;
+    height: 100%;
+    background-color: #008080;
+    border: 2px solid;
+    border-color: #000000 #ffffff #ffffff #000000;
+    color: white;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* 右侧设置区域 */
+.settings-controls {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.settings-controls fieldset {
+    padding: 5px 10px 10px;
+}
+
+.settings-controls label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.settings-controls select {
+    width: 100%;
+}
+
+/* 底部按钮栏 */
+.dialog-buttons {
+    padding: 10px 5px 5px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.dialog-buttons button {
+    margin-left: 6px;
+    min-width: 75px;
+}
+/*显示属性-结束*/
+
+
+
+/*记事本*/
+.notepad-body {
+    /* [核心修正] .notepad-body (也就是 .window-body) 自身已经是 flex 容器 */
+    /* 我们需要确保它能正确地管理它的子元素 */
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
+    flex: 1; /* 确保它自身也能在父容器中伸展 */
+    min-height: 0;
+}
+
+#notepad-textarea {
+    /* [核心修正] 现在它的父级是 flex 容器了，这个 flex: 1 将会生效 */
+    flex: 1;
+    min-height: 0; /* 同样添加 min-height 以防止内容溢出问题 */
+    width: 100%;
+    resize: none;
+    border: none;
+    outline: none;
+    font-family: 'W95F', sans-serif;
+    font-size: 16px;
+    padding: 5px;
+}
+.notepad-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    background-color: #c0c0c0; /* 经典灰色 */
+    border-top: 1px solid #ffffff;
+}
+
+.notepad-footer fieldset {
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+    margin: 0;
+}
+
+.notepad-footer label {
+    margin-right: 5px;
+}
+/*记事本-结束*/
+
+/* “我的电脑” */
+
+.explorer-body {
+    background-color: #c0c0c0; /* [关键] 确保父容器是灰色 */
+    padding: 1px;
+    
+}
+
+/* (装饰性) 菜单栏 */
+.menu-bar {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 2px 3px;
+    /* [新增] 明确的灰色背景和底部边框，使其与下方工具栏分离 */
+    background-color: #c0c0c0;
+    border-bottom: 1px solid #808080;
+    box-shadow: 0 1px 0 #ffffff;
+}
+.menu-bar li {
+    padding: 2px 6px;
+}
+.menu-bar li:hover {
+    background-color: #000080;
+    color: #ffffff;
+}
+
+/* 组合工具栏/地址栏容器 */
+.explorer-combined-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 2px 3px;
+    /* [关键] 这个区域也必须是灰色背景 */
+    background-color: #c0c0c0;
+    border-top: 1px solid #ffffff;
+    border-bottom: 1px solid #808080; 
+}
+
+/* 工具栏 (样式不变) */
+.explorer-toolbar {
+    padding-right: 5px;
+}
+.explorer-toolbar button {
+    display: inline-flex;
+    align-items: center;
+    height: 26px;
+}
+.explorer-toolbar button img {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+}
+
+/* 地址栏 (样式不变) */
+.address-bar {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+.address-bar label {
+    margin-right: 5px;
+}
+.address-bar input {
+    flex-grow: 1;
+    font-family: 'W95F', sans-serif;
+}
+
+/* 主内容窗格 (唯一保持白色的区域) */
+.main-pane {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    background-color: #ffffff; /* [关键] 这是唯一的白色背景区域 */
+    margin: 3px 3px 0 3px; /* 调整边距以配合新的状态栏 */
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    margin: 0;
+}
+
+/* [新增] 状态栏样式 */
+.status-bar {
+    margin: 0;
+    display: flex;
+    background-color: #c0c0c0; /* [关键] 确保状态栏也是灰色 */
+}
+/* 98.css 已经处理了 status-bar-field 的样式，我们只需确保容器正确即可 */
+
+
+/* 文件图标样式 (不变) */
+.file-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80px;
+    margin: 5px;
+    text-align: center;
+    padding: 5px;
+    cursor: url('/assets/cursors/link.cur'), pointer;
+}
+.file-icon img {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 5px;
+}
+.file-icon span {
+    word-break: break-all;
+}
+.file-icon:hover,
+.file-icon.selected {
+    background-color: #000080;
+    color: #ffffff;
+}
+
+/* 我的电脑-结束*/
+
+/* 文档阅读器 (Reader) */
+#reader-window .window-body {
+    overflow-y: auto;
+    padding: 15px;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+#reader-content h1, 
+#reader-content h2, 
+#reader-content h3, 
+#reader-content p, 
+#reader-content ul, 
+#reader-content ol {
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+/* 1. [保留] 强制普通段落和列表中的长单词换行 */
+#reader-content p, 
+#reader-content li {
+    overflow-wrap: break-word;
+    word-wrap: break-word; 
+}
+
+/* 2. [核心修复] 强制 <pre> 标签内的内容在溢出时也能换行 */
+#reader-content pre {
+    /* 
+     * white-space: pre-wrap; 是解决此问题的关键。
+     * 它告诉浏览器：
+     * - 像 <pre> 默认行为一样，保留所有的空格和换行符。
+     * - [但是]，如果一行文本太长要溢出容器了，允许你将其自动换行。
+     */
+    white-space: pre-wrap;
+
+    /* 
+     * word-break: break-all; 是一个更强的补充。
+     * 它确保即使是一长串没有空格的字符（比如一个超长的链接），
+     * 也会被强制打断换行。
+     */
+    word-break: break-all;
+}
+
+/* 阅读器结束 */
+
+/* ======================================== */
+/* ===== 呜哇生成器 (Uwa Encryptor) ===== */
+/* ======================================== */
+
+.uwa-body {
+    /* 继承自 main.css 的全局规则确保了它是 display:flex 和 flex-direction:column */
+    /* 我们只需要定义内边距 */
+    padding: 5px;
+}
+
+.uwa-fieldset {
+    /* [核心] 让 fieldset 成为一个 flex 容器，并且在垂直方向上占据可用空间 */
+    display: flex;
+    flex: 1;
+    min-height: 0; /* 允许自身被压缩 */
+    padding: 8px 6px 6px;
+    margin-bottom: 5px;
+}
+
+.uwa-fieldset textarea {
+    /* [核心] 让 textarea 充满其父级 fieldset 的所有空间 */
+    flex: 1;
+    width: 100%;
+    resize: none;
+    border: none;
+    outline: none;
+    font-family: 'W95F', sans-serif;
+    font-size: 16px;
+    padding: 5px;
+}
+
+/* 按钮栏样式继承自显示属性窗口的 .dialog-buttons，无需重复编写 */
+/*呜哇生成器结束*/

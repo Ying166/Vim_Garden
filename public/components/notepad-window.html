@@ -1,0 +1,24 @@
+    <!-- /public/components/notepad-window.html -->
+    <div class="window" id="notepad-window" style="top: 50px; left: 50px; width: 550px; height: 400px;">
+        <div class="title-bar">
+            <div class="title-bar-text">无标题 - 记事本</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize"></button>
+                <button aria-label="Maximize"></button>
+                <button aria-label="Close" class="close-button"></button>
+            </div>
+        </div>
+        <div class="window-body notepad-body">
+            <!-- 文本输入 -->
+            <textarea id="notepad-textarea" class="sunken-panel" placeholder="随便写点什么...当然，不写也可以。"></textarea>
+            
+            <!-- 底部信息和保存区域 -->
+            <div class="notepad-footer">
+                <fieldset>
+                    <label for="notepad-username">在这签名:</label>
+                    <input id="notepad-username" type="text" maxlength="20">
+                </fieldset>
+                <button id="notepad-save-button">发送留言</button>
+            </div>
+        </div>
+    </div>

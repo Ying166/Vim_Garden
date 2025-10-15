@@ -1,0 +1,49 @@
+<!-- /public/components/my-computer-window.html -->
+<div class="window" id="my-computer-window" style="top: 50px; left: 250px; width: 550px; height: 400px;">
+    <div class="title-bar">
+        <div class="title-bar-text">我的电脑</div>
+        <div class="title-bar-controls">
+            <button aria-label="Minimize"></button>
+            <button aria-label="Maximize"></button>
+            <button aria-label="Close" class="close-button"></button>
+        </div>
+    </div>
+    <div class="window-body explorer-body">
+        
+        <!-- 1. (装饰性) 菜单栏 -->
+        <ul class="menu-bar">
+            <li><u>文</u>件(F)</li>
+            <li><u>编</u>辑(E)</li>
+            <li><u>查</u>看(V)</li>
+            <li><u>帮</u>助(H)</li>
+        </ul>
+
+        <!-- 2. [新增] 一个容器，用于水平包裹工具栏和地址栏 -->
+        <div class="explorer-combined-bar">
+            <!-- 2a. 工具栏 (现在位于容器内部) -->
+            <div class="explorer-toolbar">
+                <button id="explorer-up-button" title="向上">
+                    <img src="assets/icons/up_arrow.png" alt="Up">
+                    <span>向上</span>
+                </button>
+            </div>
+
+            <!-- 2b. 地址栏 (现在位于容器内部) -->
+            <div class="address-bar">
+                <label>地址</label>
+                <input type="text" id="explorer-address-bar" value="C:\" readonly class="sunken-panel">
+            </div>
+        </div>
+
+        <!-- 3. 主内容窗格 -->
+        <div class="main-pane sunken-panel" id="explorer-main-pane">
+            <!-- 文件和文件夹将由 JavaScript 动态生成在这里 -->
+        </div>
+
+        <!-- 4. 状态栏 -->
+        <div class="status-bar">
+            <p class="status-bar-field" id="explorer-item-count">0 个对象</p>
+            <p class="status-bar-field">我的电脑</p>
+        </div>
+    </div>
+</div>

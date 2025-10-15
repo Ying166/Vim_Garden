@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>吸血鬼的后花园</title>
+    <!-- 98.css 库 -->
+    <link rel="stylesheet" href="https://unpkg.com/98.css" />
+    <!-- 样式文件 -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/windows.css" />
+    <!-- 头像 -->
+    <link id="dynamic-favicon" rel="shortcut icon" href = "assets/icons/pat-pat-skibidi-bee.gif" >
+</head>
+<body>
+
+    <!-- 桌面图标 -->
+    <div class="desktop-icon" data-window-id="my-computer-window">
+        <img src="assets/icons/my-computer.png" alt="我的电脑">
+        <span>我的电脑</span>
+    </div>
+    <div class="desktop-icon" data-window-id="my-projects-window">
+        <img src="assets/icons/document1.png" alt="我的文档">
+        <span>我的文档</span>
+    </div>
+    <div class="desktop-icon" data-window-id="about-me-window">
+        <img src="assets/icons/explorer.png" alt="关于吸血鬼">
+        <span>关于吸血鬼</span>
+    </div>
+    <div class="desktop-icon">
+        <img src="assets/icons/recycle_bin.png" alt="回收站">
+        <span>回收站</span>
+    </div>
+    <div class="desktop-icon" data-window-id="notepad-window">
+        <img src="assets/icons/notepad.png" alt="记事本">
+        <span>记事本</span>
+    </div>
+    <div class="desktop-icon" data-window-id="display-properties-window">
+        <img src="assets/icons/monitor_windows.png" alt="显示属性">
+        <span>显示属性</span>
+    </div>
+    <div class="desktop-icon" data-window-id="uwa-encryptor-window">
+        <img src="assets/icons/green.png" alt="呜哇生成器">
+        <span>让我们说绿绿话</span>
+    </div>
+
+    <!-- 开始菜单 -->
+    <div class="start-menu" id="start-menu">
+        <div class="start-menu-sidebar">
+            <!-- 装饰性的侧边栏 -->
+            <span><b>Vim.</b>Garden</span>
+        </div>
+        <ul class="start-menu-items" id="start-menu-items">
+        </ul>
+    </div>
+
+    <!-- ===== 任务栏 ===== -->
+    <div class="taskbar">
+        <button class="start-button">
+            <img src="assets/icons/windows.png" alt="start" width="22" height="22">
+            <b>开始</b>
+        </button>
+        <div class="taskbar-windows" id="taskbar-windows">
+            <!-- 窗口标签由JS动态加载 -->
+        </div>
+        <!-- 系统托盘区域 -->
+        <div class="system-tray">
+            <img src="/assets/icons/speaker.png" id="volume-icon" alt="音量" title="音量">
+        </div>
+        <div class="sunken-panel" id="clock">
+            <!-- 刷新同样由JS控制 -->
+        </div>
+        <div id="volume-control-panel" class="window" style="display: none;">
+            <label for="volume-slider">音量</label>
+            <input id="volume-slider" type="range" min="0" max="1" step="0.01" />
+        </div>
+    </div>
+
+
+    <!-- main.JS -->
+    <script type="module" src="js/main.js"></script>
+    <!-- showDown.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+</body>
+</html>
