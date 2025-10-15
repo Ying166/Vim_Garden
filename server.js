@@ -27,17 +27,19 @@ app.post('/save-note', (req, res) => {
             return res.status(400).json({ success: false, message: 'Invalid data provided.' });
         }
 
-        // --- 文件名处理 ---
-        // 1. 获取当前时间并格式化
-        const now = new Date();
-        const dateStr = now.toISOString().slice(0, 16).replace('T', '_').replace(/:/g, '-'); // 格式: YYYY-MM-DD_HH-MM
-        
-        // 2. 清理用户名，防止路径遍历等安全问题
-        const safeName = name.replace(/[^a-zA-Z0-9_\-]/g, '').slice(0, 20); // 只保留字母数字下划线和横杠
+        // --- [新增] 检查并创建 notes 目录 ---
+        const notesDirectory = path.join(__dirname, 'notes');
+        if (!fs.existsSync(notesDirectory)) {
+            console.log("Creating 'notes' directory...");
+            fs.mkdirSync(notesDirectory, { recursive: true });
+        }
 
-        // 3. 组合成最终文件名
+        // --- 文件名处理 ---
+        const now = new Date();
+        const dateStr = now.toISOString().slice(0, 16).replace('T', '_').replace(/:/g, '-');
+        const safeName = name.replace(/[^a-zA-Z0-9_\-]/g, '').slice(0, 20);
         const filename = `${dateStr}_${safeName}.txt`;
-        const filePath = path.join(__dirname, 'notes', filename);
+        const filePath = path.join(notesDirectory, filename); // [优化] 使用已定义的目录变量
 
         // --- 写入文件 ---
         fs.writeFileSync(filePath, message, 'utf8');
