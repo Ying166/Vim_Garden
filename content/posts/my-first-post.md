@@ -7,7 +7,7 @@
 - 支持无序列表
 - 支持[链接到B站](https://space.bilibili.com/4267300)
 
-![吸血鬼头像](assets/icons/jill.gif)
+![吸血鬼头像](assets/icons/pat-pat-skibidi-bee.gif)
 
-服务器会自动处理好路径，如果一切顺利的话上面会有一个jill在动。
+服务器会自动处理好路径，如果一切顺利的话上面的超天酱会被摸摸头。
 
