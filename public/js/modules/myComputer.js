@@ -66,7 +66,7 @@ function renderDirectory(path) {
             iconName = 'folder-shortcut.png';
         } else if (itemName.endsWith('.pdf')) {
             iconName = 'pdfile.png';
-        } else if (itemName.endsWith('.txt')) {
+        } else if (itemName.endsWith('.txt' || '.md')) {
             iconName = 'textfile.png';
         } else if (itemName.endsWith('.png')){
             iconName = 'pngfile.png'
