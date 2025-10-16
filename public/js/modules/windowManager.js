@@ -147,7 +147,8 @@ async function loadWindowHTML(windowId, params = {}) {
         return newWindowElement;
     } catch (error) {
         console.error("加载窗口失败:", error);
-        alert(`加载应用 '${windowId}' 失败，请检查控制台获取更多信息。`);
+        // [核心修改] 让 alert 弹出更详细的错误信息
+        alert(`加载应用 '${windowId}' 失败。\n\n错误详情: ${error.message}`);
         return null;
     }
 }
