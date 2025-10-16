@@ -37,7 +37,7 @@ app.post('/save-note', (req, res) => {
         // --- 文件名处理 ---
         const now = new Date();
         const dateStr = now.toISOString().slice(0, 16).replace('T', '_').replace(/:/g, '-');
-        const safeName = name.replace(/[^a-zA-Z0-9_\-]/g, '').slice(0, 20);
+        const safeName = name.replace(/[^\w\-\p{Unified_Ideograph}]/gu, '').slice(0, 20);
         const filename = `${dateStr}_${safeName}.txt`;
         const filePath = path.join(notesDirectory, filename); // [优化] 使用已定义的目录变量
 
