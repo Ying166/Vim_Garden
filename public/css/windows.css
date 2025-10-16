@@ -435,3 +435,29 @@
 
 /* 按钮栏样式继承自显示属性窗口的 .dialog-buttons，无需重复编写 */
 /*呜哇生成器结束*/
+
+/* ======================================== */
+/* ===== 图片查看器 (Image Viewer) ===== */
+/* ======================================== */
+
+.image-viewer-body {
+    /* [核心] 使用 Flexbox 来完美地居中图片 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* 深灰色背景，突出图片 */
+    background-color: #808080; 
+    padding: 5px;
+}
+
+#image-viewer-content {
+    /* [核心] 确保图片等比缩放，且不会超出容器 */
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+
+    /* 添加一个简单的边框效果 */
+    border: 2px solid;
+    border-color: #c0c0c0 #ffffff #ffffff #c0c0c0;
+}
