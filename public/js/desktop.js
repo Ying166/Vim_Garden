@@ -135,9 +135,26 @@ export function initializeDesktop() {
             if (!hasMovedEnough && Math.sqrt(dx*dx + dy*dy) > DRAG_THRESHOLD) {
                 hasMovedEnough = true;
             }
+
             const currentScale = parseFloat(document.body.style.zoom) || 1;
-            icon.style.left = `${(e.clientX / currentScale) - offsetX}px`;
-            icon.style.top = `${(e.clientY / currentScale) - offsetY}px`;
+            
+            let newLeft = (e.clientX / currentScale) - offsetX;
+            let newTop = (e.clientY / currentScale) - offsetY;
+
+            // [核心修复] 添加边界限制逻辑
+            const taskbarHeight = 38;
+            const viewportWidth = document.documentElement.clientWidth / currentScale;
+            const viewportHeight = document.documentElement.clientHeight / currentScale;
+            const iconRect = icon.getBoundingClientRect();
+            const iconWidth = iconRect.width / currentScale;
+            const iconHeight = iconRect.height / currentScale;
+
+            // 限制边界
+            newLeft = Math.max(0, Math.min(newLeft, viewportWidth - iconWidth));
+            newTop = Math.max(0, Math.min(newTop, viewportHeight - taskbarHeight - iconHeight));
+
+            icon.style.left = `${newLeft}px`;
+            icon.style.top = `${newTop}px`;
         }
 
         function onMouseUp() {
@@ -151,4 +168,8 @@ export function initializeDesktop() {
             document.removeEventListener('mousemove', onMouseMove);
         }
     });
+    // 1. 监听我们从“显示属性”发出的自定义事件
+    document.body.addEventListener('uiScaleChanged', arrangeIcons);
+    // 2. (额外增强) 同时监听浏览器窗口大小的变化
+    window.addEventListener('resize', arrangeIcons);
 }

@@ -22,6 +22,12 @@ export function initializeDisplayProperties() {
         const selectedValue = scaleSelect.value;
         document.body.style.zoom = selectedValue;
         localStorage.setItem('uiScale', selectedValue);
+
+        // [核心修复] 广播一个自定义事件，通知其他模块缩放已改变
+        document.body.dispatchEvent(new CustomEvent('uiScaleChanged', {
+            bubbles: true,
+            composed: true
+        }));
     };
 
     applyButton.addEventListener('click', applyScale);

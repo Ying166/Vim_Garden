@@ -63,44 +63,70 @@ function initializeWindowEvents(windowElement) {
         });
 
         // 拖动逻辑 (保持不变)
-        let isDragging = false, xOffset = 0, yOffset = 0, startX = 0, startY = 0;
-        const existingTransform = window.getComputedStyle(windowElement).transform;
-        if (existingTransform && existingTransform !== 'none') {
-            const matrix = new DOMMatrixReadOnly(existingTransform);
-            xOffset = matrix.m41;
-            yOffset = matrix.m42;
-        }
-        
+        let isDragging = false, initialMouseX = 0, initialMouseY = 0, initialTop = 0, initialLeft = 0;
         titleBar.addEventListener('mousedown', dragStart);
 
         function dragStart(e) {
             if (windowElement.classList.contains('maximized') || e.target.tagName === 'BUTTON') return;
             e.preventDefault();
+            
             isDragging = true;
-            startX = e.clientX;
-            startY = e.clientY;
+            
+            // 获取当前的缩放比例
+            const currentScale = parseFloat(document.body.style.zoom) || 1;
+            
+            // 记录鼠标初始位置 (相对于视口)
+            initialMouseX = e.clientX;
+            initialMouseY = e.clientY;
+
+            // 获取窗口当前的 top 和 left 值 (如果没有，则从 getComputedStyle 获取)
+            const computedStyle = window.getComputedStyle(windowElement);
+            initialTop = parseFloat(windowElement.style.top || computedStyle.top);
+            initialLeft = parseFloat(windowElement.style.left || computedStyle.left);
+
             document.addEventListener('mousemove', drag);
             document.addEventListener('mouseup', dragEnd, { once: true });
         }
 
+
         function drag(e) {
             if (!isDragging) return;
             e.preventDefault();
+
             const currentScale = parseFloat(document.body.style.zoom) || 1;
-            const mouseDeltaX = e.clientX - startX;
-            const mouseDeltaY = e.clientY - startY;
-            const newX = xOffset + (mouseDeltaX / currentScale);
-            const newY = yOffset + (mouseDeltaY / currentScale);
-            windowElement.style.transform = `translate3d(${newX}px, ${newY}px, 0)`;
+            
+            // 计算鼠标的移动距离 (需要考虑缩放)
+            const deltaX = (e.clientX - initialMouseX) / currentScale;
+            const deltaY = (e.clientY - initialMouseY) / currentScale;
+
+            // 计算新的 top 和 left
+            let newLeft = initialLeft + deltaX;
+            let newTop = initialTop + deltaY;
+
+            // [核心修复] 全新的、更精确的边界限制逻辑
+            const taskbarHeight = 38;
+            const titlebarSafeMargin = 40;
+            
+            // 获取视口和窗口的未缩放尺寸
+            const viewportWidth = window.innerWidth / currentScale;
+            const viewportHeight = window.innerHeight / currentScale;
+            const windowWidth = windowElement.offsetWidth; // 使用 offsetWidth 获取未缩放的宽度
+            const windowHeight = windowElement.offsetHeight;
+
+            // 限制左右边界
+            newLeft = Math.max(newLeft, -(windowWidth - titlebarSafeMargin)); // 防止完全移出左边
+            newLeft = Math.min(newLeft, viewportWidth - titlebarSafeMargin);  // 防止完全移出右边
+            
+            // 限制上下边界
+            newTop = Math.max(newTop, 0); // 防止移出顶部
+            newTop = Math.min(newTop, viewportHeight - taskbarHeight - titlebarSafeMargin); // 防止标题栏被任务栏完全覆盖
+
+            windowElement.style.left = `${newLeft}px`;
+            windowElement.style.top = `${newTop}px`;
         }
 
-        function dragEnd(e) {
+        function dragEnd() {
             if (!isDragging) return;
-            const currentScale = parseFloat(document.body.style.zoom) || 1;
-            const mouseDeltaX = e.clientX - startX;
-            const mouseDeltaY = e.clientY - startY;
-            xOffset += mouseDeltaX / currentScale;
-            yOffset += mouseDeltaY / currentScale;
             isDragging = false;
             document.removeEventListener('mousemove', drag);
         }
@@ -211,7 +237,6 @@ function toggleMaximize(windowElement) {
         windowElement.style.left = windowElement.dataset.originalLeft;
         windowElement.style.width = windowElement.dataset.originalWidth;
         windowElement.style.height = windowElement.dataset.originalHeight;
-        windowElement.style.transform = windowElement.dataset.originalTransform || '';
     } else {
         // ----- 进入最大化状态 -----
         
@@ -229,10 +254,7 @@ function toggleMaximize(windowElement) {
         const rect = windowElement.getBoundingClientRect();
         windowElement.dataset.originalHeight = (rect.height / currentScale) + 'px';
 
-        windowElement.dataset.originalTransform = windowElement.style.transform;
-
         // 清空内联样式并添加 .maximized 类，让 CSS 来处理最大化
-        windowElement.style.transform = '';
         windowElement.classList.add('maximized');
         windowElement.style.top = '';
         windowElement.style.left = '';
