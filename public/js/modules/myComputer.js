@@ -12,7 +12,7 @@ let VFS = {
                     "loading...": { type: "file" } // 一个临时的加载提示
                 }
             },
-            "hxppy_thxughts.png":{type:"file",app:"immage-viewer-window",filePath:"/assets/icons/hxppy_thxughts.png"}
+            "hxppy_thxughts.png":{type:"file",app:"image-viewer-window",filePath:"/assets/icons/hxppy_thxughts.png"}
         }
     }
 };
