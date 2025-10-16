@@ -461,3 +461,87 @@
     border: 2px solid;
     border-color: #c0c0c0 #ffffff #ffffff #c0c0c0;
 }
+
+/* /public/css/windows.css */
+
+/* ======================================== */
+/* ===== 画图 (MS Paint) - 最终正确版 ===== */
+/* ======================================== */
+
+/* 1. 窗口主体的布局 (父容器) */
+.paint-body {
+    /* [核心] paint-body 不再需要是flex容器，它只负责填充空间和提供内边距 */
+    /* 我们移除 display:flex, flex-wrap, align-content */
+    padding: 3px;
+    background-color: #c0c0c0;
+}
+
+/* 2. 顶部控制栏 */
+.paint-top-bar {
+    /* 顶部栏作为 flex item，高度由内容决定，不会被拉伸 */
+    /* flex-shrink: 0; 确保它不会被压缩 */
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 3px;
+    border-bottom: 1px solid #808080;
+    box-shadow: 0 1px 0 #ffffff;
+    margin-bottom: 3px;
+    flex-wrap: wrap;
+}
+
+.tool-group, .paint-color-palette {
+    /* ... 这里的样式基本不变 ... */
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    margin-right: 5px;
+    border-right: 1px solid #808080;
+    box-shadow: 1px 0 0 #ffffff;
+    margin-bottom: 3px; 
+}
+.tool-group:last-child { /* 最后一个工具组不需要分割线 */
+    border-right: none;
+    box-shadow: none;
+}
+.tool-group label {
+    margin-right: 5px;
+}
+.tool-button {
+    width: 28px;
+    height: 28px;
+}
+.tool-button img {
+    width: 20px;
+    height: 20px;
+}
+
+/* 4. 颜色面板 (现在是工具组的一部分) */
+.paint-color-palette {
+    padding: 0;
+}
+.color-box {
+    width: 22px;
+    height: 22px;
+    margin: 0 2px;
+}
+
+/* 5. 画布区域 (最关键的部分) */
+.paint-canvas-area {
+    /* 
+     * 这是解决所有问题的关键。
+     * 作为 .paint-body (一个 flex 容器) 的子元素，
+     * flex: 1; 会让它占据所有剩余的垂直空间。
+     */
+    flex: 1;
+    min-height: 0; /* 再次强调，这个属性是防止溢出的关键 */
+    background-color: #ffffff;
+    overflow: auto; 
+    width: 100%;
+}
+
+#paint-canvas {
+    cursor: crosshair;
+    display: block;
+}

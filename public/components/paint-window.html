@@ -1,0 +1,57 @@
+<!-- /public/components/paint-window.html -->
+<div class="window" id="paint-window" style="top: 100px; left: 100px; width: 640px; height: 480px;">
+    <div class="title-bar">
+        <div class="title-bar-text">无标题 - 画图</div>
+        <div class="title-bar-controls">
+            <button aria-label="Minimize"></button>
+            <button aria-label="Maximize"></button>
+            <button aria-label="Close" class="close-button"></button>
+        </div>
+    </div>
+    <!-- [核心] paint-body 现在是一个简单的垂直布局容器 -->
+    <div class="window-body paint-body">
+        
+        <!-- [核心] 新增一个统一的顶部控制栏 -->
+        <div class="paint-top-bar">
+            <!-- 工具组现在水平排列 -->
+            <div class="tool-group">
+                <button class="tool-button active" data-tool="pencil" title="铅笔">
+                    <img src="/assets/icons/tool-pencil.png" alt="Pencil">
+                </button>
+                <button class="tool-button" data-tool="eraser" title="橡皮擦">
+                    <img src="/assets/icons/tool-eraser.png" alt="Eraser">
+                </button>
+            </div>
+
+            <!-- 笔刷大小组 -->
+            <div class="tool-group">
+                <label for="brush-size">大小:</label>
+                <input type="range" id="brush-size" min="1" max="50" value="5" style="width: 80px;">
+            </div>
+
+            <!-- 颜色面板也移到了顶部 -->
+            <div class="paint-color-palette">
+                <div class="color-box selected" data-color="#000000" style="background-color: #000000;"></div>
+                <div class="color-box" data-color="#808080" style="background-color: #808080;"></div>
+                <div class="color-box" data-color="#ff0000" style="background-color: #ff0000;"></div>
+                <div class="color-box" data-color="#ffff00" style="background-color: #ffff00;"></div>
+                <div class="color-box" data-color="#00ff00" style="background-color: #00ff00;"></div>
+                <div class="color-box" data-color="#00ffff" style="background-color: #00ffff;"></div>
+                <div class="color-box" data-color="#0000ff" style="background-color: #0000ff;"></div>
+                <div class="color-box" data-color="#ff00ff" style="background-color: #ff00ff;"></div>
+                <div class="color-box" data-color="#ffffff" style="background-color: #ffffff;"></div>
+            </div>
+            <!-- [新增] 保存功能组 -->
+            <div class="tool-group" style="margin-left: auto;"> <!-- `margin-left: auto` 把它推到最右边 -->
+                <label for="paint-username">签名:</label>
+                <input id="paint-username" type="text" maxlength="20" style="width: 100px;">
+                <button id="paint-save-button">保存</button>
+            </div>
+        </div>
+
+        <!-- 主绘图区域现在是控制栏的兄弟元素 -->
+        <div class="paint-canvas-area sunken-panel">
+            <canvas id="paint-canvas"></canvas>
+        </div>
+    </div>
+</div>

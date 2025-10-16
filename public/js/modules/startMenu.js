@@ -12,7 +12,8 @@ const menuData = [
         submenu: [ // This item has a submenu
             { text: "记事本", icon: "assets/icons/notepad.png", windowId: "notepad-window" },
             { text: "显示属性", icon: "assets/icons/monitor_windows.png", windowId: "display-properties-window" },
-            { text: "让我们说绿绿话", icon:"assets/icons/green.png",windowId:"uwa-encryptor-window"}
+            { text: "让我们说绿绿话", icon:"assets/icons/green.png",windowId:"uwa-encryptor-window"},
+            { text: "画图", icon:"assets/icons/paint.png",windowId:"paint-window"}
         ]
     },
     {

@@ -9,6 +9,7 @@ import { initializeNotepad } from './modules/notepad.js';
 import { initializeReader } from './modules/reader.js'; 
 import { initializeUwaEncryptor } from './modules/uwaEncryptor.js';
 import { initializeImageViewer } from './modules/imageViewer.js';
+import { initializePaint } from './modules/paint.js';
 
 // 2. 创建一个“注册表”或“地图”
 // 这个对象将窗口的 ID 与其对应的初始化函数关联起来。
@@ -21,6 +22,7 @@ export const windowInitializers = {
     'reader-window': initializeReader,
     'uwa-encryptor-window': initializeUwaEncryptor,
     'image-viewer-window': initializeImageViewer,
+    'paint-window': initializePaint,
     // 当你未来添加新应用时，只需在这里添加一行即可
 };
 
