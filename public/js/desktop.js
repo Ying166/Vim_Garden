@@ -92,14 +92,43 @@ export function initializeDesktop() {
     const icons = document.querySelectorAll('.desktop-icon');
 
     function arrangeIcons() {
-        const desktopHeight = document.body.clientHeight - 40;
-        const iconsPerColumn = Math.floor(desktopHeight / GRID_SIZE_Y);
+        // [核心逻辑] 全新的二维网格布局算法
+
+        // 1. 获取当前有效的视口尺寸 (已考虑缩放和任务栏)
+        const currentScale = parseFloat(document.body.style.zoom) || 1;
+        const taskbarHeight = 38;
+        const effectiveWidth = document.documentElement.clientWidth / currentScale;
+        const effectiveHeight = (document.documentElement.clientHeight / currentScale) - taskbarHeight;
+
+        // 2. 计算每行和每列能容纳多少个图标
+        const iconsPerRow = Math.floor(effectiveWidth / GRID_SIZE_X);
+        const iconsPerColumn = Math.floor(effectiveHeight / GRID_SIZE_Y);
+
+        // 如果视口太小，无法容纳任何图标，则直接返回，防止错误
+        if (iconsPerRow < 1 || iconsPerColumn < 1) {
+            return;
+        }
+        
+        // 3. 遍历所有图标并计算它们在网格中的新位置
         icons.forEach((icon, index) => {
+            // 不移动正在被用户拖拽的图标
             if (icon.classList.contains('dragging')) return;
+
+            // 计算图标所在的列 (col) 和行 (row)
+            // 我们优先竖向排列，填满一列后再换到下一列
             const col = Math.floor(index / iconsPerColumn);
             const row = index % iconsPerColumn;
-            icon.style.top = `${row * GRID_SIZE_Y}px`;
-            icon.style.left = `${col * GRID_SIZE_X}px`;
+
+            // 4. 检查计算出的列是否会超出屏幕
+            if (col >= iconsPerRow) {
+                // 如果会超出，就隐藏这个图标
+                icon.style.display = 'none';
+            } else {
+                // 如果不会超出，就显示并设置其位置
+                icon.style.display = 'flex'; // 确保图标是可见的
+                icon.style.top = `${row * GRID_SIZE_Y}px`;
+                icon.style.left = `${col * GRID_SIZE_X}px`;
+            }
         });
     }
     arrangeIcons();
