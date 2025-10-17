@@ -19,10 +19,24 @@ export function initializePaint() {
 
     // --- 初始化画布 ---
     function resizeCanvas() {
+        // 1. [核心修复] 保存当前画布内容 (如果画布有尺寸的话)
+        let savedContent = null;
+        if (canvas.width > 0 && canvas.height > 0) {
+            savedContent = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        }
+
+        // 2. 调整画布的DOM尺寸以匹配其容器。这一步会隐式地清空画布。
         canvas.width = canvasArea.clientWidth;
         canvas.height = canvasArea.clientHeight;
+
+        // 3. 用白色背景填充新的尺寸 (这确保了如果画布变大，新区域也是白色的)
         ctx.fillStyle = '#ffffff';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // 4. [核心修复] 如果有保存的内容，将其绘制回画布的左上角
+        if (savedContent) {
+            ctx.putImageData(savedContent, 0, 0);
+        }
     }
     resizeCanvas();
     
