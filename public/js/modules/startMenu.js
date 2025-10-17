@@ -66,7 +66,7 @@ function createMenuItems(items, parentElement) {
         }
 
         li.innerHTML = `
-            <img src="${itemData.icon || 'assets/icons/default-icon.png'}" width="22" height="22">
+            <img src="${itemData.icon || 'assets/icons/textfile.png'}" width="22" height="22">
             <span>${itemData.text}</span>
         `;
 

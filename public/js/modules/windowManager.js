@@ -208,7 +208,7 @@ function createTaskbarTab(windowElement) { /* ... 此函数内容不变 ... */
     tab.id = `tab-${windowElement.id}`;
     tab.dataset.windowId = windowElement.id;
     
-    const iconSrc = document.querySelector(`.desktop-icon[data-window-id="${windowElement.id}"] img`)?.src || 'assets/icons/default-icon.png';
+    const iconSrc = document.querySelector(`.desktop-icon[data-window-id="${windowElement.id}"] img`)?.src || 'assets/icons/textfile.png';
     const title = windowElement.querySelector('.title-bar-text').textContent;
     
     tab.innerHTML = `<img src="${iconSrc}" alt=""><span>${title}</span>`;
