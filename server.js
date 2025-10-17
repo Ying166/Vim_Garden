@@ -84,7 +84,7 @@ app.get(/^\/get-content\/(.+)/, (req, res) => {
 });
 
 /**
- * 递归扫描目录并构建一个符合 VFS 格式的对象
+* [全新增强版] 递归扫描目录并构建一个符合 VFS 格式的对象
  * @param {string} dirPath - 要扫描的目录的完整路径
  * @param {string} relativePath - 相对于 content 根目录的路径
  * @returns {object} - 一个包含文件和文件夹的对象
@@ -96,22 +96,41 @@ function scanContentDirectory(dirPath, relativePath = '') {
     for (const item of items) {
         const itemPath = path.join(dirPath, item);
         const stats = fs.statSync(itemPath);
+        const currentRelativePath = path.join(relativePath, item).replace(/\\/g, '/');
 
         if (stats.isDirectory()) {
             structure[item] = {
                 type: "folder",
                 content: scanContentDirectory(itemPath, path.join(relativePath, item))
             };
-        } else if (path.extname(item) === '.md') {
-            const slug = path.basename(item, '.md'); // 获取不带扩展名的文件名
-            structure[item] = {
-                type: "file",
-                app: "reader-window",
-                filePath: { 
-                    type: relativePath, // 文件夹名作为 type
-                    slug: slug          // 文件名作为 slug
-                }
-            };
+        } else {
+            const ext = path.extname(item).toLowerCase();
+            
+            // 使用 switch 语句轻松扩展支持的文件类型
+            switch (ext) {
+                case '.md':
+                    structure[item] = {
+                        type: "file",
+                        app: "reader-window",
+                        // [关键] filePath 现在是干净的相对路径 (无扩展名)
+                        filePath: currentRelativePath.substring(0, currentRelativePath.length - 3)
+                    };
+                    break;
+
+                case '.png':
+                case '.jpg':
+                case '.jpeg':
+                case '.gif':
+                    structure[item] = {
+                        type: "file",
+                        app: "image-viewer-window",
+                        // [关键] filePath 现在是完整的相对路径 (带扩展名)
+                        filePath: currentRelativePath
+                    };
+                    break;
+                
+                // 默认情况下，忽略其他类型的文件
+            }
         }
     }
     return structure;
@@ -130,6 +149,27 @@ app.get('/api/get-content-structure', (req, res) => {
     } catch (error) {
         console.error('Error scanning content directory:', error);
         res.status(500).json({ error: 'Server error while scanning directory.' });
+    }
+});
+
+// --- 新增 API 路由：获取图片文件 ---
+app.get(/^\/get-image\/(.+)/, (req, res) => {
+    // 捕获到的相对路径现在在 req.params[0] 中
+    const requestedPath = req.params[0];
+    
+    // !! 安全性第一 !! (这部分逻辑保持不变)
+    const safePath = path.normalize(requestedPath).replace(/^(\.\.[\/\\])+/, '');
+    const filePath = path.join(__dirname, 'content', safePath);
+    const contentDir = path.join(__dirname, 'content');
+
+    if (!filePath.startsWith(contentDir)) {
+        return res.status(403).send('Forbidden');
+    }
+
+    if (fs.existsSync(filePath)) {
+        res.sendFile(filePath);
+    } else {
+        res.status(404).send('Image not found.');
     }
 });
 

@@ -10,7 +10,7 @@ export function initializeImageViewer(params = {}) {
     // 检查是否通过 openWindow 传递了文件路径
     if (params && params.filePath) {
         // 更新图片的源
-        imageElement.src = params.filePath;
+        imageElement.src = `/get-image/${params.filePath}`;
         
         // 从路径中提取文件名并更新窗口标题
         const filename = params.filePath.split('/').pop();

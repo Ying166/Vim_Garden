@@ -5,14 +5,7 @@ let VFS = {
     "C:": {
         type: "drive",
         content: {
-            // 这里可以保留一些非动态的、固定的文件夹或快捷方式
-            "堆放处": { // 我们将把动态内容加载到这里
-                type: "folder",
-                content: {
-                    "loading...": { type: "file" } // 一个临时的加载提示
-                }
-            },
-            "hxppy_thxughts.png":{type:"file",app:"image-viewer-window",filePath:"/assets/icons/hxppy_thxughts.png"}
+            "loading...": { type: "file" } // 一个临时的加载提示
         }
     }
 };
@@ -59,7 +52,7 @@ function renderDirectory(path) {
         iconDiv.dataset.name = itemName;
         iconDiv.dataset.type = item.type;
 
-        let iconName = 'file-default.png';
+        let iconName = 'normalfile.png';
         if (item.type === 'folder' || item.type === 'drive') {
             iconName = 'folder.png';
         } else if (item.type === 'shortcut') {
@@ -74,8 +67,6 @@ function renderDirectory(path) {
             iconName = 'pngfile.png'
         } else if (itemName.endsWith('.url')){
             iconName = 'urlfile.png'
-        } else {
-            iconName = 'normalfile.png'
         }
 
         iconDiv.innerHTML = `
@@ -139,13 +130,13 @@ export async function initializeExplorer() {
             const dynamicContent = await response.json();
             
             // 将获取到的动态内容合并到我们的 VFS 中
-            VFS["C:"].content["堆放处"].content = dynamicContent;
+            VFS["C:"].content = dynamicContent;
             
             isContentLoaded = true; // 标记为已加载
             
         } catch (error) {
             console.error("Error loading dynamic content:", error);
-            VFS["C:"].content["堆放处"].content = { "Error.txt": { type: "file", content: "无法加载内容..." } };
+            VFS["C:"].content = { "Error.txt": { type: "file", content: "无法加载内容..." } };
         }
     }
 

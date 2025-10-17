@@ -16,7 +16,7 @@ async function loadContent() {
     const titleText = readerWindow.querySelector('.title-bar-text');
     
     try {
-        const response = await fetch(`/get-content/${fileToLoad.type}/${fileToLoad.slug}`);
+        const response = await fetch(`/get-content/${fileToLoad}`);
         if (!response.ok) {
             throw new Error(`文件加载失败: ${response.statusText}`);
         }
@@ -24,7 +24,8 @@ async function loadContent() {
         const html = converter.makeHtml(markdown);
         
         contentDiv.innerHTML = html;
-        titleText.textContent = `${fileToLoad.slug} - 文档阅读器`;
+        const filename = fileToLoad.split('/').pop();
+        titleText.textContent = `${filename}.md - 文档阅读器`;
 
     } catch (error) {
         contentDiv.innerHTML = `<p style="color: red;">加载失败: ${error.message}</p>`;
