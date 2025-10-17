@@ -74,6 +74,8 @@ function renderDirectory(path) {
             iconName = 'pngfile.png'
         } else if (itemName.endsWith('.url')){
             iconName = 'urlfile.png'
+        } else {
+            iconName = 'normalfile.png'
         }
 
         iconDiv.innerHTML = `

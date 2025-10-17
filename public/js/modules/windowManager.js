@@ -202,13 +202,36 @@ function bringToFront(windowElement) { /* ... 此函数内容不变 ... */
     updateTaskbar();
 }
 
-function createTaskbarTab(windowElement) { /* ... 此函数内容不变 ... */ 
+function createTaskbarTab(windowElement, params = {}) { // [核心修改] 接收 params
     const tab = document.createElement('button');
     tab.className = 'taskbar-tab';
     tab.id = `tab-${windowElement.id}`;
     tab.dataset.windowId = windowElement.id;
     
-    const iconSrc = document.querySelector(`.desktop-icon[data-window-id="${windowElement.id}"] img`)?.src || 'assets/icons/textfile.png';
+    // [核心逻辑] 全新的、分步的图标查找过程
+    let iconSrc = 'assets/icons/default-icon.png'; // 默认图标
+
+    // 1. 优先尝试通过 data-window-id 查找桌面图标 (旧逻辑)
+    const desktopIconImg = document.querySelector(`.desktop-icon[data-window-id="${windowElement.id}"] img`);
+    if (desktopIconImg) {
+        iconSrc = desktopIconImg.src;
+    } 
+    // 2. 如果找不到，就检查窗口ID或文件参数来判断文件类型
+    else {
+        // a. 检查是否是“阅读器”
+        if (windowElement.id === 'reader-window') {
+            // 对 .md 文件，我们使用“我的文档”图标
+            iconSrc = 'assets/icons/textfile.png';
+        }
+        // b. 检查是否是“图片查看器”
+        else if (windowElement.id === 'image-viewer-window') {
+            // 对图片文件，我们可以使用“画图”程序的图标，因为它代表了图像
+            iconSrc = 'assets/icons/pngfile.png'; 
+        }
+        // c. (未来扩展) 你可以在这里为其他文件类型添加更多 else if 判断
+        // else if (windowElement.id === 'music-player-window') { ... }
+    }
+    
     const title = windowElement.querySelector('.title-bar-text').textContent;
     
     tab.innerHTML = `<img src="${iconSrc}" alt=""><span>${title}</span>`;
@@ -289,7 +312,7 @@ export async function openWindow(windowId, params = {}) {
     bringToFront(windowElement);
     
     if (!document.getElementById(`tab-${windowElement.id}`)) {
-        createTaskbarTab(windowElement);
+        createTaskbarTab(windowElement,params);
     }
     updateTaskbar();
 }

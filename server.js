@@ -57,22 +57,22 @@ app.post('/save-note', (req, res) => {
 
 // --- 新增 API 路由：获取内容文件 ---
 // :type 和 :slug 是 URL 参数，例如 /get-content/posts/my-first-post
-app.get('/get-content/:type/:slug', (req, res) => {
-    const { type, slug } = req.params;
+app.get(/^\/get-content\/(.+)/, (req, res) => {
+    // 捕获到的相对路径现在在 req.params[0] 中
+    const requestedPath = req.params[0];
 
-    // !! 安全性第一 !!
-    // 清理输入，防止路径遍历攻击 (e.g., ../../...)
-    const safeType = path.normalize(type).replace(/^(\.\.[\/\\])+/, '');
-    const safeSlug = path.normalize(slug).replace(/^(\.\.[\/\\])+/, '');
+    // !! 安全性第一 !! (这部分逻辑保持不变)
+    const safePath = path.normalize(requestedPath).replace(/^(\.\.[\/\\])+/, '');
+    const filePath = path.join(__dirname, 'content', `${safePath}.md`);
+    const contentDir = path.join(__dirname, 'content');
 
-    // 构建安全的文件路径
-    const filePath = path.join(__dirname, 'content', safeType, `${safeSlug}.md`);
+    if (!filePath.startsWith(contentDir)) {
+        return res.status(403).send('Forbidden');
+    }
 
-    // 检查文件是否存在
     if (fs.existsSync(filePath)) {
         try {
             const content = fs.readFileSync(filePath, 'utf-8');
-            // 发送纯文本内容
             res.status(200).send(content); 
         } catch (error) {
             console.error('Error reading file:', error);
